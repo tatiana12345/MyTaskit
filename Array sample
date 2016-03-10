@@ -1,0 +1,22 @@
+
+public class testArr_less13 {
+
+	public static void main(String[] args) {
+		// Lesson 13
+        
+		String[] Array = {"Sophie", "Tanya", "Sady", "Jessie"};
+		System.out.println(Array.length);
+		
+		for (int i=0; i < Array.length; i++)
+		{
+			myArray(Array[i]);
+		}
+		
+	}
+
+public static void  myArray(String name)
+	
+	{
+	System.out.println(" Hi, "+ name);	
+	}
+}
