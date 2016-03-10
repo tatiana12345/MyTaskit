@@ -1,0 +1,94 @@
+	import org.openqa.selenium.WebDriver;
+		import org.openqa.selenium.firefox.FirefoxDriver;
+		import org.openqa.selenium.By;
+
+public class lesslon12 {
+
+	public static void main(String[] args) throws InterruptedException {
+		// Lesson 11, clean code
+		
+			double minPrice1 = myFunction("SFO", "JFK", "03/10/16", "03/17/16");
+			System.out.println("The lowest price from SFO to JFK is " + minPrice1);
+
+			double minPrice2 = myFunction("MIA", "BOS", "03/10/16", "03/17/16");
+			System.out.println("The lowest price from MIA to BOS is " + minPrice2);
+			
+			double minPrice3 = myFunction("MIA", "SFO", "06/15/2016", "17/14/2016");
+			System.out.println("The lowest price from MIS to SFO is " + minPrice3);
+
+			
+			//IF FUNCTION 
+			
+			if (minPrice1 == minPrice2)
+			{
+			System.out.println("The price is the same for both destinations" + minPrice1);
+			}
+			else if (minPrice1 < minPrice2)
+			{
+				System.out.println("SFO->JFK flight is cheaper" + minPrice1);
+			}
+			else if (minPrice1 < minPrice3)
+			{
+				System.out.println("SFO->JFK flight is cheaper " + minPrice1);
+			}
+			else 
+			{
+				System.out.println("MIA->SFO flight is cheaper " + minPrice3);
+			}
+		}
+			
+	
+
+		//Define "myFunction"	
+		public static double myFunction(String FROM, String TO, String Arrive, String Depart) throws InterruptedException {
+			
+			
+			//Variables Flights only
+			        //Step 1: Open Firefox
+			
+			        WebDriver wd = new FirefoxDriver();	
+			        
+		   	       //Step 2: Launch Orbitz URL
+					wd.get("http://www.orbitz.com/");
+				
+Thread.sleep(4000);
+					
+					//Step 3: Click on 'Flight Only' tab		
+					//wd.findElement(By.xpath("//*[contains(text(), 'Flight only')]")).click(); //-radio-buttons
+					wd.findElement(By.xpath("//i[@class='i i-air tabIcon']")).click();          //-TABs
+					
+Thread.sleep(1000);
+					//Step 5: Clear the field,enter 'From City' data - MIA
+					wd.findElement(By.name("ar.rt.leaveSlice.orig.key")).clear();
+					wd.findElement(By.name("ar.rt.leaveSlice.orig.key")).sendKeys(new String[] {FROM});
+					
+					//Step 6: Enter 'To City' data JFK
+					wd.findElement(By.name("ar.rt.leaveSlice.dest.key")).clear();
+					wd.findElement(By.name("ar.rt.leaveSlice.dest.key")).sendKeys(new String[] {TO});
+					
+					//Step 7: Enter 'Leave Date' 01/10/2016
+					wd.findElement(By.name("ar.rt.leaveSlice.date")).clear();
+					wd.findElement(By.name("ar.rt.leaveSlice.date")).sendKeys(new String[] {Arrive});
+					
+					//Step 8: Enter 'Return Date' 01/20/2016
+					wd.findElement(By.name("ar.rt.returnSlice.date")).clear();
+					wd.findElement(By.name("ar.rt.returnSlice.date")).sendKeys(new String[] {Depart});
+					
+					//Step 9: Click on 'Search Flight'
+					wd.findElement(By.name("search")).click();
+					
+Thread.sleep(10000);
+					
+					//Step 10: Capture the price
+					String price = wd.findElement(By.xpath("//span[@class='money small-cents small-symbol']")).getText();
+					
+					//11. Convert alphanumeric value to numeric, to use "double" 
+					double dprice = Double.parseDouble(price.replace("$",""));
+					
+					wd.close();
+					
+					return dprice;		
+
+	}
+
+}
