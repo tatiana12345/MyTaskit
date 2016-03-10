@@ -1,0 +1,71 @@
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Self_practice {
+	// verify that User is logged in, othewise throw an exception and continue the scenario
+
+	public static void main(String[] args) throws InterruptedException {
+		// Self practice
+	//String Variable = myFunction("earphones");
+	}
+public static final String Username = "ahmed_qa@hotmail.com";
+	
+public static final String Password = "P@ss123!";
+		
+public static String myFunction (String Item) throws InterruptedException { 
+	
+	//Step1: Launch Amazon
+	WebDriver wd = new FirefoxDriver();
+	
+	wd.get("http://www.amazon.com/");
+	
+	Thread.sleep(2000);
+	
+	//Step2: Verify that user is logged in, else login
+    boolean isPresent = wd.findElements(By.xpath("//span[contains(text(), 'Hello. Sign in')]")).size() > 0;
+     
+    if (isPresent == true){
+    	wd.findElement(By.xpath("//span[contains(text(), 'Hello. Sign in')]")).click();
+    	wd.findElement(By.id("ap_email")).sendKeys(new String[] {Username});
+		wd.findElement(By.id("ap_password")).sendKeys(new String[] {Password});
+		wd.findElement(By.id("signInSubmit")).click();
+		wd.findElement(By.id("searchDropdownBox")).click();
+    	System.out.println("The user is not logged in, logging in");
+    }
+    else {
+    	wd.findElement(By.xpath("//div[@class='nav-search-facade']")).click();
+    }
+    
+	
+	//Step2: Click drop down menu
+	wd.findElement(By.xpath("//div[@class='nav-search-facade']")).click();
+	
+Thread.sleep(2000);	
+    
+	//Step3: Select "Variable" category in drop-down menu
+        wd.findElement(By.xpath("//option[contains(text(), 'Collectibles & Fine Art')]")).click();
+
+		//Step4: Type search credentials
+        wd.findElement(By.id("twotabsearchtextbox")).sendKeys(new String[] {Item});
+		
+        //Step5: Click search
+		wd.findElement(By.id("nav-search-submit-text")).click();
+	
+		//LOOP:
+		//Step6: Select the lowest price on page, store and print the value and the title
+		
+		
+		//Step7: Click next page
+		//Step8: Select the lowest price on page, store and print the value and the title
+		//
+		//Step9: Select the lowest price of all pages 
+		//Step10: Print out the result
+		
+		return null;
+}
+	
+}
+
+	
