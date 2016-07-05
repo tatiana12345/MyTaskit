@@ -1,0 +1,93 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class RegisterCH {
+
+	public static final String Pass = "password";
+	public static final String Email1 ="no_boat_138@selenium.com";
+	public static final String Email2 ="b_owner_148@selenium.com";
+	public static final String Email3 ="free_bu_127@selenium.com";
+	public static final String Email4 ="free_bus_120@selenium.com";
+	
+	public static void main(String[] args) throws InterruptedException {
+	  // Optional, if not specified, WebDriver will search your path for Chrome driver
+	  
+		String baseURL = "http://qa.app.mytaskit.com";
+	  
+		System.setProperty("webdriver.chrome.driver", "/Users/tatianakesler/Desktop/Selenium/chromedriver");
+
+	  WebDriver wdc = new ChromeDriver();
+	  wdc.get(baseURL);
+	//@CONSUMER_NO_BOAT_REG
+	   
+	   //Click SignUp as a consumer
+	    wdc.findElement(By.id("btnRegister")).click();
+	    wdc.findElement(By.id("personalTab")).click();
+	    
+	    //Type 1st, last , display name 
+	    wdc.findElement(By.id("FirstNameOwner")).sendKeys(new String [] {"Ben"});
+	    wdc.findElement(By.id("LastNameOwner")).sendKeys(new String[] {"Ten"});
+	    wdc.findElement(By.id("DisplayNameOwner")).sendKeys(new String [] {"consumer_noBoat"});
+	    
+	    //Type in email and confirm email
+	    wdc.findElement(By.id("EmailOwner")).sendKeys(new String[] {Email1});
+	    wdc.findElement(By.id("EmailConfirmOwner")).sendKeys(new String[] {Email1});
+	    
+	    //Type in Password and confirm password
+	    wdc.findElement(By.id("PasswordOwner")).sendKeys(new String [] {Pass});
+	    wdc.findElement(By.id("PasswordConfirmOwner")).sendKeys(new String [] {Pass});
+	    
+	    
+	    //Type a zip code
+	    wdc.findElement(By.id("ZipCodeOwner")).sendKeys(new String [] {"33480"});
+	    
+	    //Uncheck im a boat Owner
+	    wdc.findElement(By.id("IsBoatOwner")).click();
+	     
+	    //Check terms of use
+	    wdc.findElement(By.id("termsOfUse")).click();
+	    
+	    //Click SignUp
+	    wdc.findElement(By.id("btnSaveData")).click();
+	    
+	Thread.sleep(7000);
+	    
+	//Close pop-up and logout
+		
+       boolean isPresent = wdc.findElements(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).size() > 0;
+       
+       if (isPresent == true){						
+           wdc.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+         //Logout();
+       	Actions action2 = new Actions(wdc);
+           WebElement elems02 = wdc.findElement(By.id("navTopRightMenu"));
+           Thread.sleep(2000);
+           //WebElement elems02 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+           WebElement elems002 = wdc.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[4]/a"));
+           action2.moveToElement(elems02).click().perform();
+         Thread.sleep(2000);
+           action2.moveToElement(elems002).click().perform();   
+       }	
+       
+       else {
+       	 //Logout();
+       	Actions action2 = new Actions(wdc);
+           WebElement elems02 = wdc.findElement(By.id("navTopRightMenu"));
+           WebElement elems002 = wdc.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[4]/a"));
+           action2.moveToElement(elems02).click().perform();
+         Thread.sleep(3000);
+           action2.moveToElement(elems002).click().perform();
+       }
+	    
+	    System.out.println("CONSUMER No BOAT REG - passed");
+	    //wd.close(); 
+	   
+	    Thread.sleep(4000); 
+	
+	}
+	
+
+}
