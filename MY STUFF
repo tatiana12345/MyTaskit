@@ -1,0 +1,675 @@
+import java.awt.AWTException;
+//import java.util.List;
+
+//import java.awt.Robot; 
+//import java.awt.event.KeyEvent;
+//import java.awt.Toolkit;
+//import java.awt.datatransfer.StringSelection;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+
+
+public abstract class My_Stuff_Client {
+	
+	public static final String Pass = "password";
+	public static final String Email1 ="mtclient002@yahoo.com";
+	public static final String Email2 ="b_owner_113@selenium.com";
+	public static final String Email3 ="free_bu_65@selenium.com";
+	public static final String Boat_name = "AU-GENERATED";
+	public static final String Eq_Name = "Automation equipment"; 
+	public static final String INS = "N4757384";
+	
+	static WebDriver wd = new FirefoxDriver();
+
+	
+	public static void main(String[] args) throws InterruptedException, AWTException {
+		
+
+		wd.manage().timeouts().implicitlyWait(80, TimeUnit.SECONDS);
+		wd.get("http://qa.app.mytaskit.com");
+		
+			//ADD BOAT
+		
+		//Login as a consumer
+		
+			wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+			wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+			wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+			
+			//Close pop-up and logout
+		    wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+		    
+			//Head to My Stuff
+		    wd.findElement(By.id("limystuff")).click();
+		    
+		    //Click ADD BOAT button
+		    wd.findElement(By.id("btnAddToy")).click();
+		
+		    //Type in Boat name field
+		    wd.findElement(By.id("new-ToyName")).sendKeys(Boat_name);
+		    
+		    //Type in Manufacturer
+		    wd.findElement(By.id("new-ManufacturerName")).sendKeys("AU_Manufacturer");
+		    
+		  //Type in Model
+		    wd.findElement(By.id("new-ToyModel")).sendKeys("Boat007");
+		    	    
+		  //Type in Hull ID
+		    wd.findElement(By.id("new-HullId")).sendKeys("AU-HUDID1234");
+		    
+		  //Type in MMSI
+		    wd.findElement(By.id("new-MMSI")).sendKeys("123456789");
+		    
+		  //Type in Registration Number
+		    wd.findElement(By.id("new-RegistrationNumber")).sendKeys("0987654321");
+		    
+		  //Type in Year (optional)
+		    wd.findElement(By.id("new-Year")).sendKeys("2016");
+		    
+		  //Type in Length
+		    wd.findElement(By.id("new-Length")).sendKeys("45"); 
+		    
+		    //Type in LengthInches
+		    wd.findElement(By.id("new-LengthInches")).sendKeys("5");
+		    
+		  //Type in Beam (feet)
+		    wd.findElement(By.id("new-Beam")).sendKeys("15"); 
+		
+		  //Type in Beam (inches)
+		    wd.findElement(By.id("new-BeamInches")).sendKeys("3"); 
+		    
+		  //Type in Draft (feet)
+		    wd.findElement(By.id("new-Draft")).sendKeys("30"); 
+		    
+		    //Type in new-DraftInches
+		    wd.findElement(By.id("new-DraftInches")).sendKeys("7");
+		    
+		  //Click Save
+		    wd.findElement(By.id("saveNewBoatBottom")).click(); 
+		    
+		    Thread.sleep(8000);
+		    
+		    //IT's a BUG, but Click My Stuff to navigate to My Stuff page
+		  //Head to My Stuff
+		    wd.findElement(By.id("limystuff")).click();
+		    
+			Thread.sleep(4000);
+		    //Verify that Boat has been added
+			if(wd.getPageSource().contains(Boat_name))
+			{
+				System.out.println("Boat " + Boat_name + " - ADD BOAT - PASS");
+			}
+			else
+			{
+			System.out.println("Boat " + Boat_name + " - ADD BOAT (boat not found on the page) - FAIL");
+			}
+			
+			Thread.sleep(5000);
+			
+		//Logout();
+        	Actions action3 = new Actions(wd);
+        	WebElement elems03 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+        	Thread.sleep(3000);
+            WebElement elems003 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+            action3.moveToElement(elems03).click().perform();
+          Thread.sleep(2000);
+            action3.moveToElement(elems003).click().perform();
+       
+////////////////////////////////ADD EQUIPMENT//////////////////////////////////////////////////////////////////////////
+		//ADD EQUIPMENT
+		
+		//Login as a consumer
+		//wd.get("http://qa.app.mytaskit.com");
+		wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+		wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+		wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+		
+  //Close pop-up and logout and Logout
+		    
+	        if(wd.getPageSource().contains("glyphicon glyphicon-remove-circle"))
+	        {
+	        	wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+	        	wd.findElement(By.id("limystuff")).click();
+	        }
+	        else
+	        {
+	        	wd.findElement(By.id("limystuff")).click();
+	        }
+		
+		
+	    //Click AU-Boat Options
+	    wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/button")).click();
+		
+	    Thread.sleep(2000);
+		
+	    //Click VIEW equipment 
+		wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/div/ul/a[5]/li")).click();
+		
+		//Click ADD equipment 
+		wd.findElement(By.xpath("//*[@id='content']/form/div[1]/div[2]/a")).click();
+		
+		//Set Search Word
+		wd.findElement(By.id("equipmentSearchKeyword")).sendKeys("eng");
+		Thread.sleep(2000);
+		//Select 3rd item in the suggested list
+		wd.findElement(By.xpath("//*[@id='listitem2equipmentListbox']/span/div/div")).click();
+		
+		//Add REFERENCE NAME "ReferenceName" (another boat)
+		wd.findElement(By.id("ReferenceName")).sendKeys(Eq_Name);
+		
+		//Add Year Manufactured
+		wd.findElement(By.id("Year")).sendKeys("2015");
+		
+		//Add Serial Number
+		wd.findElement(By.id("SerialNumber")).sendKeys("5871AL#");
+		
+		//Click In service radio button
+		//wd.findElement(By.id("InServiceYes")).click();
+		
+		//Select the date In Service
+		//click calendar In service date
+		wd.findElement(By.id("InServiceDisplayDate")).click();
+		Thread.sleep(1000);
+		//Go back 1 month
+		wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/div/a[1]/span")).click();
+		//Select the date
+		wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/table/tbody/tr[3]/td[1]/a")).click();
+		Thread.sleep(1000);
+		//Click Calendar Last Service date
+		wd.findElement(By.xpath("//*[@id='EquipmentAdd']/div[1]/div[2]/div/div/div/div/div[7]/div/div[1]/label/img")).click();
+		//Select the date
+		wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/table/tbody/tr[4]/td[4]/a")).click();
+		
+		//Set Installed location
+		wd.findElement(By.id("InstalledLocation")).sendKeys("10104 Dixi HWY, WPB, FL");
+		
+		//Type something in Notes
+		wd.findElement(By.id("Notes")).sendKeys("Automation Test");
+		
+		//Save Equipment
+		wd.findElement(By.id("btnSaveBottom")).click();
+		Thread.sleep(3000);
+		
+		//Search added equipment in My Equipment
+		wd.findElement(By.id("keyword")).sendKeys(Eq_Name);
+		wd.findElement(By.id("applyFilters")).click();
+		
+		Thread.sleep(2000);
+		//Verify that equipment was added
+				    
+	        if(wd.getPageSource().contains(Eq_Name))
+	        {
+	        	System.out.println(Eq_Name + " ADD EQUIPMENT - PASS");
+	        }
+	        else
+	        {
+	        	System.out.println(Eq_Name + " Equipment can not be found - FAIL");
+	        }
+	        
+	        wd.findElement(By.id("limystuff")).click();
+		
+		Thread.sleep(2000);
+
+		//Logout();
+		Actions action4 = new Actions(wd);
+		WebElement elems04 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+		Thread.sleep(3000);
+		WebElement elems004 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+		action4.moveToElement(elems04).click().perform();
+		Thread.sleep(2000);
+		action4.moveToElement(elems004).click().perform();
+
+	
+/////////////////////////////////DELETE NEW EQUIPMENT after search////////////////////////////////////////////////////		
+
+/*	
+		//Delete NEW Equipment
+
+//Click Delete button (Equipment details page)
+        
+
+	    	for (int i=0; i>0; i++)
+	   
+	    {
+	    		//If equipment Present on the page delete the boat
+	     boolean equipment = wd.findElements(By.xpath("//*[@id='equipment-item-8627-list']/td[7]/a[2]")).size() > 0;
+	      
+			  if (equipment ==true){
+				  Thread.sleep(1000);
+				  wd.findElement(By.xpath("//*[@id='equipment-item-8627-list']/td[7]/a[2]")).click();
+			
+				  //Click Delete button (Delete equipment modal)
+			
+				  wd.findElement(By.id("BtnDelete")).click();
+			 
+				  System.out.println(Eq_Name + " is deleted - PASS");
+				}
+			  else 
+			  {
+					System.out.println(Eq_Name + " not found");
+				}
+	         }
+
+	    	Thread.sleep(2000);
+
+            //Verify that equipment was deleted
+
+	    	if(wd.getPageSource().contains(Eq_Name))
+	    	{
+	    		System.out.println(Eq_Name + " was not deleted - FAIL");
+	    	}
+               else
+	    	{
+            System.out.println(Eq_Name + " is deleted - PASS");
+             }
+*/
+
+
+
+
+/////////////////////////////////ADD INSURANCE//////////////////
+//ADD INSURANCE
+//Login as a consumer
+
+      wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+      wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+      wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+
+      //Close pop-up and logout
+      
+      if(wd.getPageSource().contains("glyphicon glyphicon-remove-circle"))
+      {
+      	wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+      	wd.findElement(By.id("limystuff")).click();
+      }
+      else
+      {
+      	wd.findElement(By.id("limystuff")).click();
+      }
+
+      //Head to My Stuff
+      wd.findElement(By.id("limystuff")).click();
+      
+      //Click AU-Boat Options
+	  wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/button")).click();
+		
+	  Thread.sleep(2000);
+
+	  // Select INSURANSE
+	  wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/div/ul/a[6]/li")).click();
+	  
+	  //Click ADD INSURANCE
+		  wd.findElement(By.xpath("//*[@id='content']/form/div[1]/div[2]/a")).click();
+		  
+	  //Type in Company Name
+		  wd.findElement(By.id("CompanyName")).sendKeys("InsureCo");
+
+      //Type in Agent Name
+         wd.findElement(By.id("AgentName")).sendKeys("Agentovich");
+		   
+     //Type in Add Manual Address
+         wd.findElement(By.id("agentAddressLookup")).sendKeys("1234");
+         
+         //Select 1st item in DD
+         wd.findElement(By.className("pac-item")).click();
+ 
+     //Type in Agent Phone
+         wd.findElement(By.id("Phone")).sendKeys("657-846-97345");     
+         
+       //Type in Agent Email
+         wd.findElement(By.id("Email")).sendKeys("ins@company.com");     
+         
+         //Type in Agent Policy Number
+         wd.findElement(By.id("PolicyNumber")).sendKeys(INS);     
+         
+         //Type in Premium Start Date
+         wd.findElement(By.id("PremiumStartDate")).click();
+         
+         Thread.sleep(3000);
+         
+       //Go 1 month back in calendar
+         wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/div/a[1]/span")).click(); 
+         
+         //Select a Date
+         wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/table/tbody/tr[3]/td[1]/a")).click();
+         
+         //Click Premium End Date
+         //wd.findElement(By.id("PremiumEndDate")).click();
+       
+         wd.findElement(By.xpath("//*[@id='content']/div[1]/div[2]/div[2]/div[2]/div/div[2]/div[3]/div/label/img")).click(); 
+         Thread.sleep(3000);
+         
+         //Select a date//1 Month FW
+         wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/div/a[2]/span")).click();
+         //Select the date
+         wd.findElement(By.xpath("//*[@id='ui-datepicker-div']/table/tbody/tr[5]/td[5]/a")).click();
+         
+         //Click Premium Amount
+         wd.findElement(By.id("PremiumAmt")).clear();
+         wd.findElement(By.id("PremiumAmt")).sendKeys("4000");
+         
+         //Click Coverage Amount
+         wd.findElement(By.id("CoverageAmt")).clear();
+         wd.findElement(By.id("CoverageAmt")).sendKeys("50,000");  
+                 
+         //Click Coverage Details
+         wd.findElement(By.id("CoverageDetails")).sendKeys("Automation Testing Note");
+            
+         //Click Save
+         wd.findElement(By.xpath("//div/a[contains(text(),'Save')]")).click();
+         Thread.sleep(3000);
+         
+       //Logout();
+         Actions action5 = new Actions(wd);
+         WebElement elems05 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+         Thread.sleep(3000);
+         WebElement elems005 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+         action5.moveToElement(elems05).click().perform();
+         Thread.sleep(2000);
+         action5.moveToElement(elems005).click().perform();
+         
+////////////////////////////////DELETE INSURANCE//////////////////////////////////
+         //DELETE INSURANCE
+   /*    //Login as a consumer
+
+         wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+         wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+         wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+         Thread.sleep(2000);
+
+      //Close pop-up and logout and Logout
+    			
+         wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+
+       //Head to My Stuff
+         wd.findElement(By.id("limystuff")).click();
+         
+         //Click AU-Boat Options
+   	  wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/button")).click();
+   		
+   	  Thread.sleep(2000);
+
+   	  // Select INSURANSE
+   	  wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/div/ul/a[6]/li")).click();
+   	  
+   	  //SEARCH FOR INSURANCE and delete
+   	boolean isPresent6 = wd.findElements(By.xpath("//*[contains(text(),'N4757384')]")).size() > 0;
+   	 
+   	if (isPresent6 == true){	
+   	//Delete INS
+   		wd.findElement(By.xpath("//*[contains(text(),'Delete')]")).click(); 
+   		Thread.sleep(2000);
+   		wd.findElement(By.xpath("html/body/div[14]/div[2]/div/div[3]/button[2]")).click();
+   		Thread.sleep(2000);
+   		wd.findElement(By.xpath("//*[contains(text(),'Ok')]")).click();
+   	Thread.sleep(3000);
+   	System.out.println(INS + " DELETE INS - PASS");
+   	}
+   	else {
+   	System.out.println(INS + " INS not found in INSURANCE");
+   	}
+         
+
+	Thread.sleep(5000);
+	
+//Logout();
+	Actions action6 = new Actions(wd);
+	//WebElement elems06 = wd.findElement(By.id("navTopRightMenu"));
+	WebElement elems06 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+	Thread.sleep(3000);
+    WebElement elems006 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+    action6.moveToElement(elems06).click().perform();
+  Thread.sleep(2000);
+    action6.moveToElement(elems006).click().perform();      
+*/		   
+///////////////////////////////DELETE A BOAT///////////////////////////////////////		
+/*
+//DELETE A BOAT
+
+//Login as a consumer
+
+wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+Thread.sleep(2000);
+
+//Close pop-up and logout and Logout
+/*			
+wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+*/
+
+/*
+//Head to My Stuff
+wd.findElement(By.id("limystuff")).click();
+
+//If boat Present on the page delete the boat
+
+boolean isPresent0 = wd.findElements(By.xpath("//*[contains(text(),'AU-GENERATED')]")).size() > 0;
+
+if (isPresent0 == true){	
+//Click 1st boat on the page to launch Edit boats page
+wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[1]/a/div/p")).click();
+Thread.sleep(7000);
+//Delete a boat
+wd.findElement(By.xpath("//*[@id='boatDetailsBody']/div[18]/div[2]/a")).click(); ///<--------//
+wd.findElement(By.xpath("//*[contains(text(),'Yes')]")).click();
+Thread.sleep(3000);
+System.out.println(Boat_name + " Boat Deleted - PASS");
+}
+else {
+System.out.println(Boat_name + " Boat can not be found - FAIL");
+}
+
+//Navigate back to My Stuff
+wd.findElement(By.id("limystuff")).click();
+Thread.sleep(3000);
+wd.findElement(By.id("limystuff")).click();
+
+Thread.sleep(3000);
+
+//Search for deleted boat on the page
+if(wd.getPageSource().contains(Boat_name))
+{
+System.out.println(Boat_name + " still persists on My Stuff page - SEARCH PASS");
+}
+else
+{
+System.out.println(Boat_name + " boat does not persist on the page - DELETE BOAT - PASS");
+}
+
+//Logout();
+Actions action5 = new Actions(wd);
+WebElement elems05 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+Thread.sleep(3000);
+WebElement elems005 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+action5.moveToElement(elems05).click().perform();
+Thread.sleep(2000);
+action5.moveToElement(elems005).click().perform();
+
+*/ 
+
+/////////////////////////////////DELETE NEW EQUIPMENT after search////////////////////////////////////////////////////		
+	/*	//Delete NEW Equipment
+		
+		//Click Delete button (Equipment details page)
+		wd.findElement(By.xpath("//*[@id='content']/div[1]/div[2]/a[2]")).click();
+		//Click Delete button (Delete equipment modal)
+		Thread.sleep(2000);
+		wd.findElement(By.id("BtnDelete")).click();
+		
+		//Verify that equipment was deleted
+		
+				if(wd.getPageSource().contains(Eq_Name))
+				{
+					System.out.println(Eq_Name + " was not deleted - FAIL");
+				}
+				else
+				{
+				System.out.println(Eq_Name + " is deleted - PASS");
+				}
+	*/			
+///////////////////////////////////Delete existing Equipment//////////////////////////////////////////////////////////////////////////////////////		
+				//Delete existing Equipment
+				//Logout();
+	 /*       	Actions action2 = new Actions(wd);
+	        	//WebElement elems02 = wd.findElement(By.id("navTopRightMenu"));
+	        	WebElement elems02 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+	            WebElement elems002 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+	            action2.moveToElement(elems02).perform();
+	          Thread.sleep(2000);
+	            action2.moveToElement(elems002).click().perform();
+	           
+	          //Launch as a consumer
+	    		//wd.get("https://qa.app.mytaskit.com");
+	    		wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+	    		wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+	    		wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+	   	
+	    		//Close popup
+	    /*		
+	    		boolean isPresent5 = wd.findElements(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).size() > 0;
+	  	        
+	  	        if (isPresent5 == true){						
+	  	            wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+	  	          //Head to My Stuff
+	  			    wd.findElement(By.id("limystuff")).click();
+	  	        }
+	  	        else{
+	  	        	//Head to My Stuff
+	  			    wd.findElement(By.id("limystuff")).click();
+	  	        }
+	   */
+	 /*		//Head to My Stuff
+	    		wd.findElement(By.id("limystuff")).click();
+	    		
+	    	    //Click AU-boat rising Boat Options
+	    	    wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/button")).click();
+	    	    
+	    	  //Click VIEW equipment 
+	    		wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[6]/div/ul/a[5]/li")).click();
+	    		
+	    	//Delete Equipment
+	    		wd.findElement(By.xpath("//*[contains(text(),'Delete')]")).click();
+				wd.findElement(By.xpath("/html/body/div[14]/div[2]/div/div[3]/button[2]")).click();
+			
+				Thread.sleep(2000);	
+			//Click OK in pop up
+				wd.findElement(By.xpath("/html/body/div[14]/div[2]/div/div[3]/button")).click();
+				
+				Thread.sleep(3000);
+				
+			//Logout();
+	        	Actions action5 = new Actions(wd);
+	        	WebElement elems05 = wd.findElement(By.id("navTopRightMenuDisplayName"));
+	            WebElement elems005 = wd.findElement(By.xpath("/html/body/div[3]/div[1]/ul/li[4]/ul/li[5]/a"));
+	            action5.moveToElement(elems05).click().perform();
+	          Thread.sleep(2000);
+	            action5.moveToElement(elems005).click().perform();
+	        */    
+	            
+////////////////////////////DOCUMENTS AND MEDIA///////////////////////////////////////////////////////////////////////////////////		
+	
+/*		//2. DOCUMENTS AND MEDIA
+		 wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+				wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+				wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+				
+				//Close pop-up and logout
+			    wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+			    
+				//Head to My Stuff
+				wd.findElement(By.id("limystuff")).click();
+				
+				//click AAA BOAT
+				//wd.findElement(By.id("btnAddToy")).click();
+				
+				//Click Action button
+				wd.findElement(By.xpath("/html/body/div[4]/div/div/div/div[1]/div[2]/ul/li[1]/button")).click();
+				
+				// Select DOCUMENTS AND MEDIA
+				wd.findElement(By.xpath("/html/body/div[4]/div/div/div/div[1]/div[2]/ul/li[1]/div/ul/a[9]/li")).click();
+				
+				//Click Add Media
+				wd.findElement(By.xpath("/html/body/div[4]/div/div/div[1]/div[2]/a")).click();
+				
+				Thread.sleep(3000);
+				
+				//Click Add Files
+				wd.findElement(By.id("addFile")).click();
+				
+				Thread.sleep(5000);
+				
+				   //Upload a file in attachments
+				
+				WebElement El = wd.findElement(By.id("addFile"));
+				El.sendKeys("file:///.file/id=6571367.4753462");  //("/Users/tatianakesler/Desktop/Screen\\ Shot\\ 2016-05-25\\ at\\ 11.26.34\\ AM.png");
+				
+			    //StringSelection ss = new StringSelection("file:///.file/id=6571367.4753462");
+			    //Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+			    
+			    //setClipboardData("file:///.file/id=6571367.4753462");
+			    //Imitate Keyboard actions: ENTER, COMMANDL+V 
+			    Robot r = new Robot ();
+			    r.delay(550);
+			    r.keyPress(java.awt.event.KeyEvent.VK_ENTER);  
+			    r.keyRelease(java.awt.event.KeyEvent.VK_ENTER);
+			    r.delay(500);
+			    r.keyPress(java.awt.event.KeyEvent.VK_CONTROL);
+			    r.keyPress(KeyEvent.VK_V);
+		        r.keyRelease(KeyEvent.VK_V);
+			    r.keyRelease(KeyEvent.VK_CONTROL);
+			    r.delay(450);
+			    r.keyPress(KeyEvent.VK_ENTER);
+			    r.delay(300);
+			    r.keyRelease(KeyEvent.VK_ENTER);
+		   
+			    Thread.sleep(5000);
+			    
+			    //Click Start upload button
+			    wd.findElement(By.id("SubmitFormBtn")).click();
+			   
+			    Thread.sleep(2000);
+			    
+			    //Close Add Media modal
+			    wd.findElement(By.id("BtnDone")).click();
+			    
+			    
+			    
+			    //Print the result
+			    System.out.println("Added fine to DOCUMENTS AND MEDIA"); 
+	*/			
+				
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+		
+		//3. LOG USAGE
+		
+	/*            
+			    wd.get("https://qa.app.mytaskit.com");
+				wd.findElement(By.id("login_email")).sendKeys(new String [] {Email1});
+				wd.findElement(By.id("login_password")).sendKeys(new String [] {Pass});
+				wd.findElement(By.xpath("//*[contains(text(),'Login')]")).click();
+				
+				//Close pop-up and logout
+			    wd.findElement(By.xpath("//i[@class= 'glyphicon glyphicon-remove-circle']")).click();
+			    
+				//Head to My Stuff
+				wd.findElement(By.id("limystuff")).click();
+				
+				//Click Option AU Boat
+				wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/button")).click();
+				
+				//CLICK LOG USAGE
+				wd.findElement(By.xpath("//*[@id='container-wrapper']/div[2]/ul/li[9]/div/ul/a[2]/li")).click();
+				
+*/                //4. 
+        }
+
+
+	
+	}	
